@@ -11,7 +11,7 @@ def rp(x):
     '''
     return x[1:-1]
 
-def loadData(queries):
+def queryData(queries):
     # text = [line.strip() for line in open(dataPath+'dbsnp.txt')]
     # for line in text:
 
