@@ -11,20 +11,24 @@ def rp(x):
     '''
     return x[1:-1]
 
-def loadData():
-    snps = {}
-    text = [line.strip() for line in open(dataPath+'dbsnp.txt')]
-    for line in text:
-        items = line.split('\t')
-        rsid = rp(items[1])
-        chrid = rp(items[3])
-        chrposition = rp(items[4])
-        allele = rp(items[5])
-        gene = rp(items[8].split(';')[0])
-        print rsid, chrid, chrposition, allele, gene
+def loadData(queries):
+    # text = [line.strip() for line in open(dataPath+'dbsnp.txt')]
+    # for line in text:
 
-        snps[rsid] = (chrid, chrposition, allele, gene)
-    np.save(dataPath+'dbsnp', snps)
+    querySNP = {}
+    for q in queries:
+        querySNP[q] = None
 
-if __name__ == '__main__':
-    loadData()
+    with open(dataPath+'dbsnp.txt') as f:
+        for line in f:
+            items = line.split('\t')
+            rsid = rp(items[1])
+            chrid = rp(items[3])
+            chrposition = rp(items[4])
+            allele = rp(items[5])
+            gene = rp(items[8].split(';')[0])
+
+            if rsid in querySNP:
+                querySNP[rsid] = (chrid, chrposition, allele, gene)
+
+    return querySNP
